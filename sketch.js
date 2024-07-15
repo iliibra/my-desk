@@ -19,6 +19,7 @@ let abigailImg, legionImg, lifeImg, startrekImg, upgradeImg;
 let abigail, legion, life, startrek, upgrade;
 let wolfsong, sealover, hgt, loveless, enemies, clickbait;
 let medias = [];
+let w, h;
 
 
 
@@ -30,7 +31,16 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(window.innerWidth, window.innerHeight);
+    w = window.innerWidth;
+    h = window.innerHeight;
+
+    if (w > 1920) {
+        w = 1920;
+    }
+    if (h > 953) {
+        h = 953
+    }
+    var canvas = createCanvas(w, h);
     engine = Engine.create();
     world = engine.world;
 
@@ -49,7 +59,7 @@ function setup() {
     Events.on(mConstraint, "mousedown", handleClick)
 
     button = createImg("assets/images/speaker.png")
-    button.position(window.innerWidth - 60, 10);
+    button.position(w - 60, 10);
     button.size(35, 35)
     button.mousePressed(handleSong)
 
@@ -71,7 +81,7 @@ function handleSong() {
 
 function draw() {
   
-    image(background, 0, 0, window.innerWidth, window.innerHeight);
+    image(background, 0, 0, w, h);
     Engine.update(engine);
 
 
@@ -90,7 +100,7 @@ function draw() {
         }
     }
 
-    image(meImg, window.innerWidth/2 + 200, window.innerHeight - meImg.height);
+    image(meImg, w/2 + 200, h - meImg.height);
 
     vizualizeMusic();
 
@@ -108,6 +118,15 @@ function draw() {
 
 }
 
+function windowResized() {
+    // Resize the canvas when the window is resized
+    resizeCanvas(window.innerWidth, window.innerHeight);
+
+    // Redraw the scene to reflect changes
+    redraw();
+}
+    
+
 function vizualizeMusic() {
 
     //Colorful Coding, "Code an Audio Visualizer in p5js (from scratch) | Coding Project #17", 
@@ -117,7 +136,7 @@ function vizualizeMusic() {
     var wave = fft.waveform();
     noFill();
     stroke(255, 255, 255)
-    translate(width/2 + 90, height/2 - 150)
+    translate(w/2 + 90, h/2 - 150)
 
     for (var t = -1; t <= 1; t += 2) {
         beginShape();
@@ -158,7 +177,7 @@ function makeTransparentBackdrop() {
     rectMode(CENTER);
     noStroke();
     fill(255, 255, 255, 150);
-    rect(window.innerWidth / 2, window.innerHeight / 2, window.innerWidth, window.innerHeight);
+    rect(w / 2, h / 2, w, h);
     pop();
 }
 
@@ -193,13 +212,13 @@ function setupObjects() {
     miffy2.isClickable = false;
     miffy3.isClickable = false;
 
-    pens = new ShelfObject(pensImg, 90, 400, " ", " ", pensJson.vertices);
+    pens = new ShelfObject(pensImg, 90, 350, " ", " ", pensJson.vertices);
     pens.isClickable = false;
-    pencilcase = new ShelfObject(pencilcaseImg, 150, 400, " ", " ", pencilcaseJson.vertices);
+    pencilcase = new ShelfObject(pencilcaseImg, 150, 350, " ", " ", pencilcaseJson.vertices);
     pencilcase.isClickable = false;
-    paintB = new ShelfObject(paintBImg, 350, 400, " ", " ", paintJson.vertices);
-    paintO = new ShelfObject(paintOImg, 400, 400, " ", " ", paintJson.vertices);
-    paintG = new ShelfObject(paintGImg, 400, 400, " ", " ", paintJson.vertices);
+    paintB = new ShelfObject(paintBImg, 350, 350, " ", " ", paintJson.vertices);
+    paintO = new ShelfObject(paintOImg, 400, 350, " ", " ", paintJson.vertices);
+    paintG = new ShelfObject(paintGImg, 400, 350, " ", " ", paintJson.vertices);
     paintB.isClickable = false;
     paintO.isClickable = false;
     paintG.isClickable = false;
@@ -209,7 +228,7 @@ function setupObjects() {
     cactus2 = new ShelfObject(cactus2Img, 500, 90, "My green little succulent", "He just kinda kept on growning", cactus2Json.vertices);
 
 
-    books = new ShelfObject(booksImg, 650, 400, 
+    books = new ShelfObject(booksImg, 650, 350, 
         "Some of my favorite books", 
         "I recommend all of these, obviously", booksJson.vertices
     );
@@ -250,23 +269,23 @@ function setupMedia(){
         "#ADDAF7", "#BC2749"
     );
 
-    abigail = new Media(abigailImg, 90, 900, "Abigail", 
+    abigail = new Media(abigailImg, 90, 850, "Abigail", 
         "Abigail has done nothing wrong, ever, in her life!", 
         "white", "#951502"
     );
-    legion = new Media(legionImg, 90, 880, "Legion", 
+    legion = new Media(legionImg, 90, 830, "Legion", 
         "Everyone says this movie is bad, but I love it!", 
         "#004C57", "white"
     );
-    life = new Media(lifeImg, 90, 850, "Life", 
+    life = new Media(lifeImg, 90, 820, "Life", 
         "This one made me genuinely grip my seat in the movie theater, because I was so tense", 
         "black", "white"
     );
-    startrek = new Media(startrekImg, 90, 840, "Star Trek", 
+    startrek = new Media(startrekImg, 90, 810, "Star Trek", 
         "The 2009 reboot. I have probably watched this more than 10 times", 
         "white", "black"
     );
-    upgrade = new Media(upgradeImg, 90, 825, "Upgrade", 
+    upgrade = new Media(upgradeImg, 90, 800, "Upgrade", 
         "One of the very few movies that can pull off a bad ending", 
         "black", "#E32611"
     );
@@ -276,13 +295,13 @@ function setupMedia(){
 }
 
 function setupShelf() {
-    boundaries.push(new Boundary(20, window.innerHeight / 2, 15, window.innerHeight + 20));
-    boundaries.push(new Boundary(700, window.innerHeight / 2, 15, window.innerHeight + 20));
+    boundaries.push(new Boundary(20, h / 2, 15, h + 20));
+    boundaries.push(new Boundary(700, h / 2, 15, h + 20));
 
     boundaries.push(new Boundary(360, 150, 665, 15));
-    boundaries.push(new Boundary(360, 450, 665, 15));
-    boundaries.push(new Boundary(360, 750, 665, 15));
-    boundaries.push(new Boundary(360, window.innerHeight, 665, 15));
+    boundaries.push(new Boundary(360, 400, 665, 15));
+    boundaries.push(new Boundary(360, 700, 665, 15));
+    boundaries.push(new Boundary(360, h, 665, 15));
 }
 
 function importImages() {
