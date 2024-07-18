@@ -370,7 +370,7 @@ function importImages() {
     startrekImg = loadImage("assets/images/startrek.png");
     upgradeImg = loadImage("assets/images/upgrade.png");
 
-    meImg = loadImage("assets/images/me_small_new.gif");
+    meImg = loadImage("assets/images/me_new.gif");
 
 }
 
