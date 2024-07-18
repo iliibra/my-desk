@@ -4,7 +4,8 @@ let avocadoImg, miffyImg, bearyImg, duckImg, cactus1Img, cactus2Img, byunnyGImg,
 let pensImg, pencilcaseImg, paintBImg,  paintOImg, paintGImg, booksImg, moviesImg;
 let avocado, miffy, beary, duck, cactus1, cactus2, byunnyG, byunnyP, miffy2, miffy3, milky, melon;
 let pens, pencilcase, paintB, paintO, paintG, books, movies;
-let flamingo, saySo, songOfStorms, lagtrain, beneath, pursuing;
+//let flamingo, saySo, songOfStorms, lagtrain, beneath, pursuing;
+let chill, deep, hipHop, sloth, study;
 let songs = [];
 let shelfObjects = [];
 let boundaries = [];
@@ -20,6 +21,7 @@ let abigail, legion, life, startrek, upgrade;
 let wolfsong, sealover, hgt, loveless, enemies, clickbait;
 let medias = [];
 let w, h;
+let onStartScreen = true;
 
 
 
@@ -64,6 +66,27 @@ function setup() {
     button.mousePressed(handleSong)
 
     fft = new p5.FFT();
+}
+
+function startScreen() {
+    push()
+    makeTransparentBackdrop();
+    textFont(font);
+    textSize(75);
+    fill("#61282A");
+    noStroke();
+    strokeWeight(2);
+    textAlign(CENTER);
+    text("Welcome to my Desk!", width/2, 100);
+    textSize(50);
+    text("I filled this desk with items that mean something to me.", width/2, 300);
+    text("You can click on and drag a bunch of items on the shelf to the left.", width/2, 400);
+    text("You can also turn on some music by clicking the icon in the upper right corner of the screen.", width/2, 500);
+    text("If you have any feedback or encounter any bugs, feel free to message me, I'm @iLiibra on instagram :)", width/2, 600);
+
+    textSize(75);
+    text("Click anywhere on the screen to continue!", width/2, height - 100);
+    pop()
 }
 
 function handleSong() {
@@ -116,13 +139,15 @@ function draw() {
         media.showBig(globalClicked, font);
     }
 
+    if(onStartScreen) {
+        startScreen();
+    }
+
 }
 
 function windowResized() {
-    // Resize the canvas when the window is resized
     resizeCanvas(window.innerWidth, window.innerHeight);
 
-    // Redraw the scene to reflect changes
     redraw();
 }
     
@@ -155,6 +180,10 @@ function vizualizeMusic() {
 }
 
 function handleClick(event) {
+
+    if (onStartScreen) {
+        onStartScreen = false;
+    }
 
     if (mConstraint.body != null && globalClicked == false && mConstraint.body.plugin.object.isClickable) {
         let clickedPlushie = mConstraint.body.plugin.object;
@@ -366,6 +395,7 @@ function importJson() {
 }
 
 function importMusic() {
+    /*
     //Flamingo by Kero Kero Beats
     flamingo = loadSound("assets/music/Flamingo.mp3");
     //Say So (Japanese Version) by Rainych
@@ -378,6 +408,13 @@ function importMusic() {
     beneath = loadSound("assets/music/Beneath-the-mask.mp3");
     //Pursuing My True Self from the Persona 4 Soundtrack
     pursuing = loadSound("assets/music/Pursuing-my-true-self.mp3");
+    */
 
-    songs.push(flamingo, saySo, songOfStorms, lagtrain, beneath, pursuing);
+    chill = loadSound("assets/music/chill.mp3");
+    deep = loadSound("assets/music/deep.mp3");
+    hipHop = loadSound("assets/music/hip-hop.mp3");
+    sloth = loadSound("assets/music/sloth.mp3");
+    study = loadSound("assets/music/study.mp3");
+
+    songs.push(chill, deep, hipHop, sloth, study);
 }
